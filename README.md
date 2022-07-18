@@ -1,5 +1,4 @@
 # project4-urlShortnerGroup38
-# Radon
 
 ## Scalable URL Shortner Project Requirement
 
