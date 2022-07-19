@@ -19,16 +19,16 @@ const isValidURL = function (value) {
 }
 
 
-const urlShortner = async function (req, res) {
+const createUrl = async function (req, res) {
 
   let data = req.body
-  let { longUrl } = data
+  let { longUrl} = data
   if (!Object.keys(data).length > 0) {
     return res.status(400).send({ status: false, msg: "please provide data" })
   }
 
   if (!isValid(longUrl)) {
-    return res.status(400).send({ status: false, msg: "please enter url" })
+    return res.status(400).send({ status: false, msg: "please enter valid Key" })
   }
   if (!isValidURL(longUrl)) { return res.status(400).send({ status: false, msg: "please enter valid url" }) }
 
@@ -42,44 +42,70 @@ const urlShortner = async function (req, res) {
     return res.status(400).send({ status: false, msg: "please enter valid url" })
   }
 
-  let shortUrl = baseUrl + '/' + urlCode
+  let url = await urlModel.findOne({ longUrl });
 
-  data.urlCode = urlCode
-  data.shortUrl = shortUrl
-  let findUrl2 = await urlModel.findOne({ longUrl: longUrl })
+  if (url) {
+    return res
+      .status(400)
+      .send({ status: false, msg: "This longUrl already Exist" });
+  }
+    let shortUrl = baseUrl + '/' + urlCode
 
-  if (findUrl2) {
-    longUrl = findUrl2.longUrl
-    return res.status(302).redirect(longUrl)
+    data.urlCode = urlCode
+    data.shortUrl = shortUrl
+    let findUrl2 = await urlModel.findOne({ longUrl: longUrl })
+
+    if (findUrl2) {
+      longUrl = findUrl2.longUrl
+      return res.status(302).redirect(longUrl)
+    }
+
+    await urlModel.create(data)
+
+    let findUrl = await urlModel.findOne({ urlCode: urlCode }).select({ __v: 0, _id: 0, createdAt: 0, updatedAt: 0 })
+
+
+    return res.status(201).send({ status: true, data: findUrl })
   }
 
-  await urlModel.create(data)
 
-  let findUrl = await urlModel.findOne({ urlCode: urlCode }).select({ __v: 0, _id: 0, createdAt: 0, updatedAt: 0 })
+//--------------------------get-------------------------------------//
 
-
-  return res.status(201).send({ status: true, data: findUrl })
-}
-
-
-
-
-const getUrl = async (req, res) => {
-
-  let urlCode = req.params.urlCode
-
-  if (!urlCode) { return res.status(400).send({ status: false, msg: "please enter urlCode in Params" }) }
-
-  let findUrl = await urlModel.findOne({ urlCode: urlCode }).select({ longUrl: 1, _id: 0 })
-  if (!findUrl) { return res.status(400).send({ status: false, msg: "url not found" }) }
+  const getUrl = async (req, res) => {
+    try{
+      let urlCode = req.params.urlCode;
+      const checkurl = await urlModel.findOne({ urlCode: urlCode }); //hm jo urlCode dal rhe hai vo DB me hai ki nhi
   
-  longUrl = findUrl.longUrl
+      if (checkurl) {
+        return res.status(302).redirect(checkurl.longUrl); //check url mil gaya to redirect kr dege
+      }
+      return res.status(40).send({ status: false, msg: "No url found" }); //checkurl nhi milega to ye msg aayega
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ status: false, msg: err.msg });
+    }
+  };
 
-  return res.status(302).redirect(longUrl)
+  module.exports = { createUrl, getUrl }
 
 
 
-}
 
 
-module.exports = { urlShortner, getUrl }
+
+  
+
+    // let urlCode = req.params.urlCode
+
+    // if (!urlCode) { return res.status(400).send({ status: false, msg: "please enter urlCode in Params" }) }
+
+    // let findUrl = await urlModel.findOne({ urlCode: urlCode }).select({ longUrl: 1, _id: 0 })
+    // if (!findUrl) { return res.status(400).send({ status: false, msg: "url not found" }) }
+
+    // longUrl = findUrl.longUrl
+
+    // return res.status(302).redirect(longUrl)
+
+
+
+  // }

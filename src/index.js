@@ -15,11 +15,11 @@ mongoose.connect("mongodb+srv://iftekhar:Iftekhar123@cluster0.omtag.mongodb.net/
       useNewUrlParser: true,
     }
 )
-  .then(() => console.log("MongoDb is connected"))
+  .then(() => console.log("MongoDb is Fire  🔥🔥 "))
   .catch((err) => console.log(err));
 
 app.use("/", route);
 
 app.listen(process.env.PORT || 3000, function () {
-    console.log("Express app running on port " + (process.env.PORT || 3000));
+    console.log("Server is Fire " + (process.env.PORT || 3000 )+ "  🔥🔥");
   });
