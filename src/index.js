@@ -21,5 +21,5 @@ mongoose.connect("mongodb+srv://iftekhar:Iftekhar123@cluster0.omtag.mongodb.net/
 app.use("/", route);
 
 app.listen(process.env.PORT || 3000, function () {
-    console.log("Server is Fire " + (process.env.PORT || 3000 )+ "  🔥🔥");
+    console.log("Fire on Port " + (process.env.PORT || 3000 )+ "  🔥🔥");
   });

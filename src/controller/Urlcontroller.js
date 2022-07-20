@@ -79,7 +79,7 @@ const createUrl = async function (req, res) {
       if (checkurl) {
         return res.status(302).redirect(checkurl.longUrl); //check url mil gaya to redirect kr dege
       }
-      return res.status(40).send({ status: false, msg: "No url found" }); //checkurl nhi milega to ye msg aayega
+      return res.status(400).send({ status: false, msg: "No url found" }); //checkurl nhi milega to ye msg aayega
     } catch (err) {
       console.error(err);
       res.status(500).send({ status: false, msg: err.msg });
