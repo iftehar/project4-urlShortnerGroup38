@@ -87,25 +87,3 @@ const createUrl = async function (req, res) {
   };
 
   module.exports = { createUrl, getUrl }
-
-
-
-
-
-
-  
-
-    // let urlCode = req.params.urlCode
-
-    // if (!urlCode) { return res.status(400).send({ status: false, msg: "please enter urlCode in Params" }) }
-
-    // let findUrl = await urlModel.findOne({ urlCode: urlCode }).select({ longUrl: 1, _id: 0 })
-    // if (!findUrl) { return res.status(400).send({ status: false, msg: "url not found" }) }
-
-    // longUrl = findUrl.longUrl
-
-    // return res.status(302).redirect(longUrl)
-
-
-
-  // }
