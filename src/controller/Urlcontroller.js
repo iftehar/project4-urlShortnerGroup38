@@ -65,13 +65,7 @@ const createUrl = async function (req, res) {
             await SET_ASYNC(`${longUrl}`, JSON.stringify(longUrlDetails))
             return res.status(200).send({ status: true, msg: "data fetched successfully", data: longUrlDetails })
         }
-  // const fetchlongUrl = async function (req,res){
-     
-  //     const longUrl = await urlModel.findOne ({longUrl:req.longUrl});
-  //     await SET_ASYNC(`${longUrl}`, JSON.stringify(Url));
-  //     res.send({data:longUrl});
-    
-  // }
+ 
 
   let urlCode = shortid.generate()
 
