@@ -128,22 +128,7 @@ const createUrl = async function (req, res) {
         else {
             return res.status(404).send({ status: false, msg: "urlCode not exist" })
         }
-    //   let urlCode = req.params.urlCode;
-    //   const checkurl = await urlModel.findOne({ urlCode: urlCode }); //hm jo urlCode dal rhe hai vo DB me hai ki nhi
-  
-    //   if (checkurl) {
-    //     return res.status(302).redirect(checkurl.longUrl); //check url mil gaya to redirect kr dege
-    //   }
-    //   return res.status(400).send({ status: false, msg: "No url found" }); //checkurl nhi milega to ye msg aayega
-    // // }  const fetchUrl = async function (req,res){
-    //   let cacheUrl = await GET_ASYNC(`${req.params.urlCode}`)
-    //   if (cacheUrl){
-    //     res.send(cacheUrl)
-    //   } else{
-    //     const Url = await urlModel.findOne ({urlCode:urlCode});
-    //     await SET_ASYNC(`${urlCode}`, JSON.stringify(Url));
-    //     res.send({data:Url});
-    //   }
+   
 
 
    
